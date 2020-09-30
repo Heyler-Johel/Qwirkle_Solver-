@@ -1,6 +1,8 @@
-from tablero import Tablero, Ficha, Figura, Color
+from bots.botBasico import BotBasico
+from bots.botInteligente import BotInteligente
 from jugador import Jugador
-from bots import BotHumano, BotInteligente
+from tablero.tablero import Tablero
+from tablero.ficha import Ficha, Color, Figura
 
 class QwirkleGame:
     #Constructor de objetos
@@ -15,7 +17,7 @@ class QwirkleGame:
     def generarFichas(self):
         self.bolsaFichas = []
 
-        Figura = [
+        figura = [
             Figura.circulo,
             Figura.diamante,
             Figura.trebol,
@@ -24,7 +26,7 @@ class QwirkleGame:
             Figura.triangulo
         ]
 
-        Color = [
+        color = [
             Color.blue,
             Color.cyan,
             Color.green,
@@ -34,9 +36,9 @@ class QwirkleGame:
         ]
 
         for i in range(3):
-            for j in range(len(colors)):
-                for k in range(len(shapes)):
-                    self.bolsaFichas.append(Ficha(color = Color[j], figura = Figura[s]))
+            for j in range(len(color)):
+                for k in range(len(figura)):
+                    self.bolsaFichas.append(Ficha(color = color[j], figura = figura[k]))
 
     def main(self, jugadores):           
 
@@ -45,10 +47,10 @@ class QwirkleGame:
 
         for jugador in jugadores:
             if jugador == 'humano':
-                self.jugadores.append(BotHumano('Humano'))
-            elif jugador == 'bot_basico':
+                self.jugadores.append(Jugador('Humano'))
+            elif jugador == 'botBasico':
                 self.jugadores.append(BotBasico('Basico'))
-            elif jugador == 'bot_inteligente':
+            elif jugador == 'botInteligente':
                 self.jugadores.append(BotInteligente('Inteligente'))
             else:
                 raise ValueError('%s no es un tipo de jugador válido' % jugador)
@@ -56,17 +58,17 @@ class QwirkleGame:
         msgPuntuacion = (-1, 0)
         jugadorActual = 0
         while True:
+            input ('\n\nPresione una tecla para continuar...')     # para que se aprecie cada jugada
             print('\n' * 50)                            # espacios entre cada tablero
-            input ('Presione una tecla para continuar...')     # para que se aprecie cada jugada
             print('Jugando Qwirkle\n')
 
             print('  Puntuación:')
             for i in range(len(self.jugadores)):
-                message = '    %s - %i' % (self.jugadores[i].nombre(), self.jugadores[i].puntuacion())
+                message = '    %s - %i' % (self.jugadores[i].getNombre(), self.jugadores[i].getPuntuacion())
                 if msgPuntuacion[0] == i:
                     message += ' +%i' % msgPuntuacion[1]                #msgPuntuacion[1] es la cantidad de puntos nuevos obtenidos
                 print(message)
-            print('\n  Es el turno de: %s \n' % self.jugadores[jugadorActual].nombre())
+            print('\n  Es el turno de: %s \n' % self.jugadores[jugadorActual].getNombre())
 
             self.tablero.imprimirTablero(mostrarJugadasValidas = True)
             self.jugadores[jugadorActual].asignarFichas(self.bolsaFichas)               # Se le asigna al jugador sus seis fichas
