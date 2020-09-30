@@ -21,9 +21,6 @@ class Figura:
 # Clase Ficha 
 # Permite crear fichas para el tablero, de un color y una figura especifica 
 class Ficha:
-    color = ''
-    figura = ''
-
     # Constructor de objetos Ficha
     def Ficha(self, pColor = None, pFigura = None):
         self.color = pColor
