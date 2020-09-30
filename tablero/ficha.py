@@ -27,7 +27,8 @@ class Ficha:
         self.figura = figura
 
     # Retorna los datos de una ficha  en string.
-    def toString(self):
-        texto = self.color + ' ' + self.figura
-        return texto
-        
+    def __str__(self):
+        return '%s %s' % (self.color, self.figura)
+
+    def __repr__(self):
+        return self.__str__()

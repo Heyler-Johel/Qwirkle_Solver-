@@ -17,17 +17,21 @@ class Jugador:
             posRandom = rnd.randint(0, len(bolsaFichas) - 1)                # elige aleatoriamente una posición del arreglo de fichas 
             self.fichas.append(bolsaFichas.pop(posRandom))                  # y la agrega a la mano del jugador
 
-    #def jugarTurno(self, board):
+    def jugarTurno(self, board):
         # aquí se debe implementar el algoritmo de juego del humano
+        return False
 
     # Muestra las fichas que tiene un jugador en su mano
     @staticmethod
     def mostrarFichasMano(fichasMano):
-        fichasMano = ''
+        fichasEnMano = ''
+        mensaje = ''
         for ficha in fichasMano:
-            fichasMano += colored(ficha.shape, ficha.color) + ' '
-        print('\n  Fichas del jugador: %s' % fichasMano)
-        print('              1 2 3 4 5 6\n')
+            fichasEnMano += colored(ficha.figura, ficha.color) + ' '
+        mensaje += '\n  Fichas del jugador: %s' % fichasEnMano
+        mensaje += '\n                      1 2 3 4 5 6\n'
+
+        return mensaje
 
     def sumarPuntos(self, pPuntos):
         self.puntuacion += pPuntos
@@ -38,12 +42,12 @@ class Jugador:
     def vaciarFichas(self):
         self.fichas = []
 
+    def getFichas(self):
+        return self.fichas
+
     def getPuntuacion(self):
         return self.puntuacion
 
     def getNombre(self):
         return self.nombre
-
-    def getFichas(self):
-        return self.fichas
 

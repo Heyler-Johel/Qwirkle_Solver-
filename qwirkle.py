@@ -17,7 +17,7 @@ class QwirkleGame:
     def generarFichas(self):
         self.bolsaFichas = []
 
-        figura = [
+        figuras = [
             Figura.circulo,
             Figura.diamante,
             Figura.trebol,
@@ -26,7 +26,7 @@ class QwirkleGame:
             Figura.triangulo
         ]
 
-        color = [
+        colores = [
             Color.blue,
             Color.cyan,
             Color.green,
@@ -36,14 +36,20 @@ class QwirkleGame:
         ]
 
         for i in range(3):
-            for j in range(len(color)):
-                for k in range(len(figura)):
-                    self.bolsaFichas.append(Ficha(color = color[j], figura = figura[k]))
+            for j in range(len(colores)):
+                for k in range(len(figuras)):
+                    self.bolsaFichas.append(Ficha(color = colores[j], figura = figuras[k]))
+
+    # Permite mostrar la bolsa de fichas del juego
+    def mostrarBolsaFichas(self):
+        for i in range (len(self.bolsaFichas)):
+            print (self.bolsaFichas[i])
 
     def main(self, jugadores):           
 
         self.tablero = Tablero() 
         self.generarFichas()   
+#        self.mostrarBolsaFichas()
 
         for jugador in jugadores:
             if jugador == 'humano':
@@ -66,16 +72,17 @@ class QwirkleGame:
             for i in range(len(self.jugadores)):
                 message = '    %s - %i' % (self.jugadores[i].getNombre(), self.jugadores[i].getPuntuacion())
                 if msgPuntuacion[0] == i:
-                    message += ' +%i' % msgPuntuacion[1]                #msgPuntuacion[1] es la cantidad de puntos nuevos obtenidos
+                    message += ' + %i' % msgPuntuacion[1]                #msgPuntuacion[1] es la cantidad de puntos nuevos obtenidos
                 print(message)
             print('\n  Es el turno de: %s \n' % self.jugadores[jugadorActual].getNombre())
 
+            self.jugadores[jugadorActual].asignarFichas(self.bolsaFichas)                                                       # Se le asigna al jugador sus seis fichas
+            print (self.jugadores[jugadorActual].mostrarFichasMano(self.jugadores[jugadorActual].getFichas()))             
             self.tablero.imprimirTablero(mostrarJugadasValidas = True)
-            self.jugadores[jugadorActual].asignarFichas(self.bolsaFichas)               # Se le asigna al jugador sus seis fichas
             self.tablero.iniciarTurno()
             self.jugadores[jugadorActual].jugarTurno(self.tablero)
 
-            puntuacion = self.tablero.puntuacion()                                                
+            puntuacion = self.tablero.puntuacion()                                           
             self.jugadores[jugadorActual].sumarPuntos(puntuacion)                               # Le agregamos los puntos al marcador global del jugador
 
             msgPuntuacion = (jugadorActual, puntuacion)
