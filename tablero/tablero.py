@@ -96,7 +96,6 @@ class Tablero:
         if self.tablero[y][x] is not None:                                      # verifica que no sea una posición donde ya hay una ficha
             return False
 
-
         # Verifica que haya al menos un espacio adyacente al elegido que contenga una ficha
         espaciosAdyacentes = []
         if y - 1 >= 0:
@@ -318,7 +317,14 @@ class Tablero:
                 for i in range(len(self.tablero)):
                     self.tablero[i] += [None]
 
-    def reset_turn(self):
-        """Reset the board to the way it was at the beginning of the turn"""
+    # Reinicia el turno, poniendo el tablero como estaba al inicio del turno
+    def reiniciarTurno(self):
         self.tablero = copy.deepcopy(self.ultimaJugada)
         self.jugadas = []
+
+    # Convierte el comando dado del tipo 'A2' a un par ordenado (x, y)
+    @staticmethod
+    def convertirCoordenada(coordenada):
+        xCoordenada = ord(coordenada[0]) - 65               # aquí obtenemos el equivalente de un caracter en unicode
+        yCoordenada = int (coordenada[1:]) - 1
+        return xCoordenada, yCoordenada
